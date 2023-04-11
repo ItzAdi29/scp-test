@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load bootstrap %}
+
+{% block title %} Query Page {% endblock %}
+
+{% block content %}
+<div class="container">
+
+<div class="row justify-content-center">
+
+                <div class="col-lg-6 mb-8 mb-lg-0">
+                    <center> <h3>Ask Your Query</h3></center>
+
+                    <form action="" method="POST" >{% csrf_token %}
+
+                         <div class="form-group">
+   <input type="text" class="form-control" name="name" id="name" placeholder="Name" style="font-size:15px; height:40px; width:470px;"><br><br>
+  </div>
+  <div class="form-group">
+   <input type="mail" class="form-control" name="mail" id="mail" placeholder="Email" style="font-size:15px; height:40px; width:470px;"><br><br>
+  </div>
+  <div class="form-group">
+   <input type="text" class="form-control" name="contactno" id="contactno" placeholder="Contact Number" style="font-size:15px; height:40px; width:470px;"><br><br>
+  </div>
+  <div class="form-group">
+   <div class="selectWrapper">
+   <textarea class="form-control" rows="3" cols="10" placeholder="Question" name="question" id="question" style="font-size:15px; height:40px; width:470px;"></textarea><br></div>
+  </div>
+                        
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <input type="submit" value="Submit" class="btn btn-primary btn-md text-white">
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Customer List{% endblock %}
+
+{% block content %}
+<style>
+.footer-area {
+  position:relative;
+  z-index: 1;
+  top: 35vh;
+  padding-top: 100px;
+  width: 100%;
+}
+.table{
+    margin-left: 16%;
+    width:90%;
+    border:2px solid black;
+}
+</style>
+    <section class="serviceman-area section-padding-40-0">
+
+        <div class="container" style="align-items: center; justify-content: center;display: flex;">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-6">
+
+                <h3 style="align-items: center;justify-content: center;display: flex"> {{ request.user.first_name }}'s APPOINTMENT HISTORY</h3>
+
+                </br >
+                </br >
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="serviceman-area section-padding-10-0" style="padding-left:50px;">
+
+        <div class="col-11">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Booking Id</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Course Category</th>
+                    <th scope="col">Created </th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Booking Date & Time</th>
+                    <th scope="col">Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for customer in customer_appointment_history_list %}
+                    <tr>
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.message }}</td>
+                        <td>{{ customer.course_category }}</td>
+                        <td>{{ customer.date }}</td>
+                        <td> {{ customer.phone_number }}</td>
+                        <td> {{ customer.date_time }}</td>
+                        <td>
+
+                            <a href="{% url 'appointment:delete-customer-appointment' customer.id %}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                             <a href="{% url 'appointment:update-customer-appointment' customer.id %}">
+                                <span class="">UPDATE</span>
+                            </a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </section>
+
+{% endblock %}

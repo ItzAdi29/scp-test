@@ -1,0 +1,211 @@
+{% load static %}
+<!-- Preloader -->
+<!-- Preloader -->
+
+<style>
+    li {
+
+        margin: 5px 20px;
+    }
+    li a {
+        display: flex;
+        align-items: right;
+        justify-content: right;
+        position: relative;
+        background: greenyellow;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .classynav{
+        float: right;
+    }
+
+    .h-service{
+        position: relative;
+        width:100%;
+        background-color: red;
+    }
+
+    @media only screen and (max-width: 767px) {
+
+        nav{ left: 0%;
+        }
+        
+        .h-service{left:0;}
+           }
+           
+    @media only screen and (min-width: 767px) {
+        #nav{
+            margin-top:310px;
+        }   
+    }
+           
+    #nav{
+        margin-left:-100px;
+        display:flex;
+        flex-direction:column;
+    }  
+    
+    #nav li{
+        margin-top:10px;
+        width:200px;
+    }
+    
+    .dropdown{
+        align-items:center;
+    }
+    
+        .dropdown li a{
+        margin-left:5%;
+        width:90%;
+    }
+</style>
+
+<div id="preloader">
+    <div class="preload-content">
+        <div id="dento-load"></div>
+    </div>
+</div>
+
+<!-- ***** Header Area Start ***** -->
+<!-- <header class="header-area"> -->
+    <!-- Top Header Area -->
+    <!-- <div class="top-header-area">
+        <div class="container h-100">
+
+            <div class="row h-100 align-items-center"> -->
+                <!-- Top Content -->
+                <!-- <div class="col-6 col-md-9 col-lg-8">
+                    <i class="fa"></i> <span>In-Home-Service</span>
+                    <div class="top-header-content">
+                    </div>
+                </div> -->
+                <!-- Top Header Social Info -->
+                <!-- <div class="col-6 col-md-3 col-lg-4">
+                    <div class="top-header-social-info text-right">
+                        <img  style="height: 100px; width: 100px" src="/media/eserviceman_logo.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Top Header End -->
+
+    <!-- Main Header Start -->
+    <div class="col-12col-md-12 col-lg-12" style="width:100%; padding:0; margin:0; ">
+        <span class="h-service" style="font-size:50px; text-align:center; display:block;">In-Home-Service</span>
+       </div>
+    <div class="main-header-area">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+
+              <!-- <div class="col-6 col-md-9 col-lg-8">
+                <span class="h-service" style="font-size:50px; text-align:center; display:block;">In-Home-Service</span>
+               </div> -->
+
+                <!-- Classy Menu -->
+                <nav class="classy-navbar justify-content-between" id="dentoNav">
+
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="classy-menu">
+
+                        <!-- Close Button -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <!-- Nav Start -->
+                        <div class="classynav">
+
+                            <ul id="nav">
+
+                                <li><a href="{% url 'appointment:home' %}">Home</a></li><br>
+
+                                {% if request.user.is_authenticated and request.user.role == 'serviceman' %}
+                                <span style="margin:0 5px;"> Hi ! Welcome to Service person Portal</span>
+                                    <li>
+                                       <a href="">
+                                            <span class="glyphicon glyphicon-user">
+                                                {{ request.user.first_name }}
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown" style="background:red;width:100%;">
+                                            <li><a href="{% url 'accounts:serviceman-profile-update'  %}"> EDIT PROFILE</a></li>
+                                            <li><a href="{% url 'appointment:serviceman-appointment-create' %}"> APPOINTMENT CREATE</a></li>
+                                            <li><a href="{% url 'appointment:serviceman-appointments' %}">  VIEW APPOINTMENTS</a></li>
+                                            <li><a href="{% url 'accounts:logout' %}"> LOGOUT</a></li>
+                                        </ul>
+                                    </li>
+
+
+                             {% elif request.user.is_authenticated and request.user.role == 'customer' %}
+                                    <span> Hi ! Welcome to Customer Portal</span>
+                                    <li>
+                                        <a href="">
+                                            <span class="glyphicon glyphicon-user">
+                                                    {{ request.user.first_name }}
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown" style="background:red;width:100%;">
+                                            <li><a href="{% url 'appointment:customer-book-appointment' %}"> BOOK AN APPOINTMENT</a></li>
+                                            <li><a href="{% url 'appointment:customer-servicemans-list' %}"> servicemanS LIST</a></li>
+                                            <li><a href="{% url 'appointment:customer-appointment-history' %}"> APPOINTMENT HISTORY</a></li>
+                                            <li><a href="{% url 'accounts:customer-profile-update'  %}"> EDIT PROFILE</a></li>
+                                            <li><a href="{% url 'accounts:logout' %}"> LOGOUT</a></li>
+
+                                        </ul>
+                                    </li>
+
+
+
+
+                              {% else %}
+
+                                    <li>
+                                         <a href="query">
+                                            <span class="glyphicon glyphicon-phone"> query</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                          <a href="map_location">
+                                            <span class="glyphicon glyphicon-maps"> Location</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{% url 'accounts:login' %}">
+
+                                            <span class="glyphicon glyphicon-user"> login</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li><a href="#">Register</a>
+                                        <ul class="dropdown" style="background:red;width:100%;">
+                                            <li><a href="{% url 'accounts:serviceman-registration' %}"> SERVICE PERSON</a></li>
+                                            <li><a href="{% url 'accounts:customer-registration' %}"> CUSTOMER</a></li>
+                                        </ul>
+                                    </li>
+                                    
+                                {% endif %}
+                            </ul>
+
+                        </div>
+                        <!-- Nav End -->
+                    </div>
+
+                    <!-- Booking Now Button -->
+
+
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

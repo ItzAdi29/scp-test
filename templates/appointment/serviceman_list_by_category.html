@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Appointment List{% endblock %}
+
+
+
+{% block content %}
+<style>
+      .row{
+        margin-left:20%;
+      }
+</style>
+
+    <section class="serviceman-area section-padding-40-0">
+
+    <div class="container">
+
+
+      <div class="row">
+
+        <!-- Section Heading -->
+        <div class="col-12">
+          <div class="section-heading text-center">
+
+
+            <h3>Available Service Person/s for Customer</h3>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+          {% for apt in serviceman_list %}
+        <!-- Single serviceman Area -->
+        <div class="col-12 col-sm-6 col-md-4">
+
+          <div class="single-serviceman-area mb-100">
+        <!--  <img  style="height: 500px; width: 600px" src="/media/eserviceman_logo.png" alt=""> -->
+              <br><br><br><br><br><br><br>
+            <!-- serviceman Content -->
+            <div class="serviceman-content">
+              <!-- Social Info -->
+              <div class="serviceman-social-info">
+              </div>
+
+              <div class="serviceman-info bg-gradient-overlay">
+                  <h5><b>Name:</b> {{ apt.full_name }}</h5>
+                  <p><b>Department:</b> {{ apt.department }}</p>
+                  <p><b>Available Timings:</b> {{ apt.start_time }} to {{ apt.end_time }} from {{ apt.location }}</p>
+                  <p><b>Consultation Fees:</b> {{ apt.consultation_fees }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Appointment List{% endblock %}
+{% block content %}
+<style>
+.footer-area {
+  position:relative;
+  z-index: 1;
+  top: 25vh;
+  padding-top: 100px;
+  width: 100%;
+}
+
+.row{
+  margin-left:20%;
+  width:90%;
+}
+</style>
+
+    <section class="serviceman-area section-padding-40-0">
+
+    <div class="container">
+
+
+      <div class="row">
+
+        <!-- Section Heading -->
+        <div class="col-12">
+          <div class="section-heading text-center">
+            <h3>{{ request.user.first_name }}'s Appointment/s</h3>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+      <div class="row">
+          {% for apt in appointment %}
+        <!-- Single serviceman Area -->
+        <div class="col-12 col-sm-6 col-md-4">
+
+          <div class="single-serviceman-area mb-100">
+            <!--  <img  style="height: 500px; width: 600px" src="{{ apt.image.url }}" alt="">  -->
+            <div class="serviceman-content">
+              <!-- Social Info -->
+              <div class="serviceman-social-info">
+
+              </div>
+              <div class="serviceman-info bg-gradient-overlay">
+                <h5>{{ apt.full_name }}</h5>
+                <p>{{ apt.department }}</p>
+                 <p>Available {{ apt.start_time }} to {{ apt.end_time }} in {{ apt.hospital_name }}</p>
+                  <p> AT {{ apt.location }}
+                      <i class="fa fa-trash-o" style="color: red" aria-hidden="true"></i>
+                      <a href="{% url 'appointment:delete-appointment' apt.id %}">Delete Appointment</a>
+                  </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
