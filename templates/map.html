@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% load bootstrap %}
 
@@ -13,7 +14,8 @@
                     <center> <h3>Location On Map</h3></center>
                     
                     
-        <img src="https://i.natgeofe.com/n/a25e30a6-4081-41e0-a494-cdb469343b58/kids-beginners-world-edu-k-3-clip-1900x1900-gradient_4x3.jpg">            
+        <!--img src="https://i.natgeofe.com/n/a25e30a6-4081-41e0-a494-cdb469343b58/kids-beginners-world-edu-k-3-clip-1900x1900-gradient_4x3.jpg"-->  
+                    <img src="{% static 'map.png' %}" alt="home" /> 
         
                     <!--<form action="" method="POST" >{% csrf_token %}-->
 

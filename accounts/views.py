@@ -69,7 +69,8 @@ class RegisterservicemanView(CreateView):
             ####################################################################################################
             # email_sub = SNS.subscribe("email", user_email)
             SNS = boto3.client('sns',region_name='us-east-1')
-            response = SNS.subscribe(TopicArn='arn:aws:sns:us-east-1:034094653688:scp-service-topic',Protocol='email',Endpoint=user_email)
+            # response = SNS.subscribe(TopicArn='arn:aws:sns:us-east-1:034094653688:scp-service-topic',Protocol='email',Endpoint=user_email)
+            response = SNS.subscribe(TopicArn='arn:aws:sns:us-east-1:034094653688:scp-topic',Protocol='email',Endpoint=user_email)
             if 'SubscriptionArn' in response:
                 print("Successfully subscribed to SNS topic!")
             else:

@@ -26,10 +26,6 @@ For customer Profile
     
 """
 
-S3_bucket_name = 'bucket'
-S3_obj_key = 'key'
-S3_flag = 1
-
 
 
 class EditCustomerProfileView(UpdateView):
@@ -423,32 +419,32 @@ class UpdateCustomerAppointmentView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(self.request, *args, **kwargs)
 
+    # 'QuerySet' object has no attribute '_meta'
+    # The get_object method returns queryset i.e., list of records, instead of instance. To get instance
+    # we can use first() on filter() . This gives you first occurrence.
     def get_object(self, queryset=None, **kwargs):
+        # Filter the data using User id and appointment id
+        print("Total Objects in Appointment History Table " + str(self.model.objects.all().count()))
         filtered_object = self.model.objects.filter(user_id=self.request.user.id, id=kwargs.get('pk'))
-        global S3_flag
-        if S3_flag == 1:
-            global S3_bucket_name
-            global S3_obj_key
-            print('---------------------------------filtered_object : ',filtered_object)
-            S3_bucket_name = filtered_object.first().bucket_name
-            S3_obj_key = filtered_object.first().obj_key
+        print("Object count after running the FILTER  " + str(filtered_object.all().count()))
+        
+        print('---------------------------------filtered_object : ',filtered_object)
+
         return filtered_object.first()
-        # appointment = self.model.objects.filter(user_id=self.request.user.id, id=kwargs.get('pk')).first()
-        # global S3_bucket_name
-        # global S3_obj_key
-        # S3_bucket_name = appointment.bucket_name
-        # S3_obj_key = appointment.obj_key
-        # return appointment
 
     def get(self, request, *args, **kwargs):
         try:
+            # Calling get_object() method to create Object and assign to Object Variable
             self.object = self.get_object(**kwargs)
         except Http404:
-            raise Http404("User doesn't exist")
+            raise Http404("User doesn't exists")
+        # rendering the Template by Passing Context data
         return self.render_to_response(self.get_context_data())
 
     def form_valid(self, form, **kwargs):
         form.instance.user = self.request.user
+
+        # Delete a record from Table using Django Model (Deleting the Existing Appointment)
         Object_to_be_delete = self.model.objects.filter(user_id=self.request.user.id, id=kwargs.get('pk'))
         print(Object_to_be_delete.delete())
         return super(UpdateCustomerAppointmentView, self).form_valid(form)
@@ -462,44 +458,56 @@ class UpdateCustomerAppointmentView(UpdateView):
             phone_number = request.POST.get('phone_number','')
             date_time = request.POST.get('date_time','')
             message = request.POST.get('message','')
-            S3_bucket_name = request.POST.get('bucket_name','')
-            S3_obj_key = request.POST.get('obj_key','')
-            print(name, department, phone_number, date_time, message, S3_bucket_name, S3_obj_key)
+            # location = request.POST.get('location','')
+            print(name, department, phone_number, date_time, message)
+            
             self.form_valid(form)
+            
+            # url = 'https://jatsuhvmea.execute-api.us-east-1.amazonaws.com/createPDF/delete'
             url = 'https://r6p1p8siqg.execute-api.us-east-1.amazonaws.com/pdfcreate/update'
+
+
             data = {
                 'Service_Category': department,
                 'Full_Name': name,
                 'Phone_Number': phone_number,
                 'Date': date_time,
                 'Data': message,
-                'S3': S3_bucket_name,
-                'key' : S3_obj_key,
+                # 'S3': 'scp-service-man',
+                'S3': 'scp-api-test-bucket',
+                'key' : 'Some CategoryJohn Doe12345678902023-04-04.pdf',
                 'S3_File': 'Input docx.docx',
+                # 'SNS_ARN': 'arn:aws:sns:us-east-1:034094653688:scp-service-topic'
                 'SNS_ARN': 'arn:aws:sns:us-east-1:569186011793:scp-topic'
             }
+            
+
             headers = {
                 'Content-Type': 'application/json'
             }
+            
             response = requests.post(url, data=json.dumps(data), headers=headers)
+            
             if response.status_code == 200:
                 json_response = response.json()
                 Bucket = json_response['Bucket']
                 Key = json_response['Key']
                 print (Bucket + "    " + Key)
-                form.instance.bucket_name = Bucket
-                form.instance.obj_key = Key
-                form.save()
-                global S3_flag
-                S3_flag == 0
-                # update the bucket_name attribute
-                # self.bucket_name = Bucket
+                
+                
+                mymembers = TakeAppointment.objects.all()
+                # mymembers.delete()
+                mymember = mymembers.filter(full_name=name, course_category=department, date_time=date_time).values()
+                mymember.update(obj_key=Key)
+            
+                
             else:
                 print('Request failed with status code:', response.status_code)
+            
+            
             return self.form_valid(form, **kwargs)
         else:
             return self.form_invalid(form)
-
 
 
 """
