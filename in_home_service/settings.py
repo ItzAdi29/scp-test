@@ -91,23 +91,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db',
-        'HOST': 'database.crcg793oe7vk.us-east-1.rds.amazonaws.com',
+        'HOST': 'scp-in-home-service-db.cx1jsdjqgjg9.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
         'USER': 'admin',
         'PASSWORD': 'dbpass01',
    }
 }
 
-#DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'db',
-        #'HOST': 'db-instance.clytftk74ost.us-east-1.rds.amazonaws.com',
-        #'PORT': '3306',
-        #'USER': 'admin',
-        #'PASSWORD': 'x21201188',
-   #}
-#}
 
 import dj_database_url
 db_from_env = dj_database_url.config()

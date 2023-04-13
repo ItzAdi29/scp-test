@@ -26,11 +26,6 @@ For customer Profile
     
 """
 
-S3_bucket_name = 'bucket'
-S3_obj_key = 'key'
-S3_flag = 1
-
-
 
 class EditCustomerProfileView(UpdateView):
     model = User
@@ -66,131 +61,6 @@ class EditCustomerProfileView(UpdateView):
 """
 
 
-# class TakeAppointmentView(CreateView):
-#     template_name = 'appointment/take_appointment.html'
-#     form_class = TakeAppointmentForm
-#     extra_context = {
-#         'title': 'Take Appointment'
-#     }
-#     success_url = reverse_lazy('appointment:home')
-
-#     @method_decorator(login_required(login_url=reverse_lazy('accounts:login')))
-#     def dispatch(self, request, *args, **kwargs):
-#         if not self.request.user.is_authenticated:
-#             return reverse_lazy('accounts:login')
-#         if self.request.user.is_authenticated and self.request.user.role != 'customer':
-#             return reverse_lazy('accounts:login')
-#         return super().dispatch(self.request, *args, **kwargs)
-
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         user_name = form.instance.user
-#         return super(TakeAppointmentView, self).form_valid(form)
-
-#     def post(self, request, *args, **kwargs):
-#         self.object = None
-#         form = self.get_form()
-#         if form.is_valid():
-#             name = request.POST.get('full_name','')
-#             department = request.POST.get('course_category','')
-#             phone_number = request.POST.get('phone_number','')
-#             date_time = request.POST.get('date_time','')
-#             message = request.POST.get('message','')
-#             # location = request.POST.get('location','')
-            
-#             # form.save()
-            
-#             # self.form_valid(form)
-            
-#             # url = 'https://jatsuhvmea.execute-api.us-east-1.amazonaws.com/createPDF/create'
-#             url = 'https://r6p1p8siqg.execute-api.us-east-1.amazonaws.com/pdfcreate/create'
-
-#             data = {
-#                 'Service_Category': department,
-#                 'Full_Name': name,
-#                 'Phone_Number': phone_number,
-#                 'Date': date_time,
-#                 'Data': message,
-#                 'S3': 'scp-api-test-bucket',
-#                 'S3_File': 'Input docx.docx',
-#                 'SNS_ARN': 'arn:aws:sns:us-east-1:569186011793:scp-topic'
-#             }
-            
-#                 # 'S3': 'scp-service-man',
-#                 # 'SNS_ARN': 'arn:aws:sns:us-east-1:034094653688:scp-service-topic'
-            
-#             headers = {
-#                 'Content-Type': 'application/json'
-#             }
-            
-#             response = requests.post(url, data=json.dumps(data), headers=headers)
-            
-#             if response.status_code == 200:
-#                 json_response = response.json()
-#                 # Bucket = json_response['Bucket']
-#                 # Key = json_response['Key']
-#                 print ("json response - ",json_response)
-#                 print('------------')
-#                 Bucket = str(json_response['Bucket'])
-#                 Key = str(json_response['Key'])
-#                 print (Bucket + "    " + Key)
-            
-                
-#                 # mymembers = TakeAppointment.objects.all()
-#                 # # print(mymembers)
-#                 # # mymembers.delete()
-#                 # mymember = mymembers.filter(full_name=name, course_category=department, date_time=date_time).values()
-#                 # # mymember = mymembers.filter(full_name=name, course_category=department, date_time=date_time)
-#                 # mymember = mymember.update(bucket_name=Bucket, obj_key=Key)
-#                 # mymember.save()
-                
-#                 # mymember = TakeAppointment.objects.filter(full_name=name, course_category=department, date_time=date_time).first()
-#                 # if mymember:
-#                 #     mymember.bucket_name = Bucket
-#                 #     mymember.obj_key = Key
-#                 #     mymember.save()
-                
-#                 mymembers = TakeAppointment.objects.filter(full_name=name, course_category=department, date_time=date_time)
-#                 mymembers.update(bucket_name=Bucket, obj_key=Key)
-
-
-                
-                
-#                  # Print the row data to the console
-#                 # print(my_obj)
-#                 # my_obj=TakeAppointment.objects.filter(full_name=name, course_category=department, date_time=date_time, phone_number=phone_number).values().update(bucket_name=Bucket, obj_key=Key)
-                
-#                 # my_obj = TakeAppointment.objects.get(full_name=name, course_category=department, date_time=date_time, phone_number=phone_number)
-#                 # my_obj.bucket_name = Bucket
-#                 # my_obj.obj_key = Key
-#                 # my_obj.save()
-                
-#                 # my_obj1=TakeAppointment.objects.filter(full_name=name, course_category=department, date_time=date_time, phone_number=phone_number).values()
-#                 # print(my_obj1)
-                
-#                 # mymembers = TakeAppointment.objects.all()
-#                 # mymembers.save()
-                
-#                 # print(mymembers)
-                
-#             else:
-#                 print('Request failed with status code:', response.status_code)
-
-            
-            
-#             ####################################################################################################
-#             #field_course_category = request.POST.get('course_category','')
-#             #field_full_name = request.POST.get('full_name','')
-#             #field_date_time = request.POST.get('date_time','')
-#             #message = 'An appoinment has been booked for ' + field_course_category + ' by ' + field_full_name + ' on ' + field_date_time + '.'
-#             #subject = 'Appointment has been created !!!!!!.'
-#             #email_pub=SNS.publish(message, subject)
-#             ####################################################################################################
-#             # return None
-#             return self.form_valid(form)
-#         else:
-#             return self.form_invalid(form)
-
 class TakeAppointmentView(CreateView):
     template_name = 'appointment/take_appointment.html'
     form_class = TakeAppointmentForm
@@ -224,8 +94,8 @@ class TakeAppointmentView(CreateView):
             
             self.form_valid(form)
             
-            # url = 'https://jatsuhvmea.execute-api.us-east-1.amazonaws.com/createPDF/create'
-            url = 'https://r6p1p8siqg.execute-api.us-east-1.amazonaws.com/pdfcreate/create'
+            
+            url = 'https://091g5b8v9j.execute-api.us-east-1.amazonaws.com/pdfapi/pdfcreate'
 
             data = {
                 'Service_Category': department,
@@ -233,9 +103,9 @@ class TakeAppointmentView(CreateView):
                 'Phone_Number': phone_number,
                 'Date': date_time,
                 'Data': message,
-                'S3': 'scp-api-test-bucket',
+                'S3': 'scp-in-home-service',
                 'S3_File': 'Input docx.docx',
-                'SNS_ARN': 'arn:aws:sns:us-east-1:569186011793:scp-topic'
+                'SNS_ARN': 'arn:aws:sns:us-east-1:907329705668:SCP-IHS-topic'
             }
             
             
@@ -425,20 +295,7 @@ class UpdateCustomerAppointmentView(UpdateView):
 
     def get_object(self, queryset=None, **kwargs):
         filtered_object = self.model.objects.filter(user_id=self.request.user.id, id=kwargs.get('pk'))
-        global S3_flag
-        if S3_flag == 1:
-            global S3_bucket_name
-            global S3_obj_key
-            print('---------------------------------filtered_object : ',filtered_object)
-            S3_bucket_name = filtered_object.first().bucket_name
-            S3_obj_key = filtered_object.first().obj_key
         return filtered_object.first()
-        # appointment = self.model.objects.filter(user_id=self.request.user.id, id=kwargs.get('pk')).first()
-        # global S3_bucket_name
-        # global S3_obj_key
-        # S3_bucket_name = appointment.bucket_name
-        # S3_obj_key = appointment.obj_key
-        # return appointment
 
     def get(self, request, *args, **kwargs):
         try:
@@ -466,7 +323,7 @@ class UpdateCustomerAppointmentView(UpdateView):
             S3_obj_key = request.POST.get('obj_key','')
             print(name, department, phone_number, date_time, message, S3_bucket_name, S3_obj_key)
             self.form_valid(form)
-            url = 'https://r6p1p8siqg.execute-api.us-east-1.amazonaws.com/pdfcreate/update'
+            url = 'https://091g5b8v9j.execute-api.us-east-1.amazonaws.com/pdfapi/pdfupdate'
             data = {
                 'Service_Category': department,
                 'Full_Name': name,
@@ -476,7 +333,7 @@ class UpdateCustomerAppointmentView(UpdateView):
                 'S3': S3_bucket_name,
                 'key' : S3_obj_key,
                 'S3_File': 'Input docx.docx',
-                'SNS_ARN': 'arn:aws:sns:us-east-1:569186011793:scp-topic'
+                'SNS_ARN': 'arn:aws:sns:us-east-1:907329705668:SCP-IHS-topic'
             }
             headers = {
                 'Content-Type': 'application/json'
@@ -490,10 +347,6 @@ class UpdateCustomerAppointmentView(UpdateView):
                 form.instance.bucket_name = Bucket
                 form.instance.obj_key = Key
                 form.save()
-                global S3_flag
-                S3_flag == 0
-                # update the bucket_name attribute
-                # self.bucket_name = Bucket
             else:
                 print('Request failed with status code:', response.status_code)
             return self.form_valid(form, **kwargs)
@@ -542,14 +395,14 @@ def query(request):
        question = request.POST.get('question', '')
 
     
-       url = "https://y7az312pz5.execute-api.us-east-1.amazonaws.com/test"
+       url = "https://f0bwqy76ag.execute-api.us-east-1.amazonaws.com/api/"
 
        payload = {
-                  "a": name,
-                  "b": mail,
-                  "c": contactno,
-                  "d": question,
-                  "e": "arn:aws:sns:us-east-1:034094653688:scp-topic"
+                  'a': name,
+                  'b': mail,
+                  'c': contactno,
+                  'd': question,
+                  'e': 'arn:aws:sns:us-east-1:907329705668:SCP-IHS-topic'
                 }
 
        response = requests.post(url, data=json.dumps(payload))
@@ -565,8 +418,7 @@ def map_location(request):
     s3 = boto3.resource('s3')
     API_KEY = 'JjwheWGTI0y3UKYToQj0HDa58vxc3bj2'
     # Fetch Excel file from S3
-    # bucket_name = 'scp-service-man'
-    bucket_name = 'scp-api-test-bucket'
+    bucket_name = 'scp-in-home-service'
     file_name = 'map location.xlsx'
     obj = s3.Object(bucket_name, file_name)
     excel_data = obj.get()['Body'].read()
@@ -580,7 +432,7 @@ def map_location(request):
     
     # Call MapQuest API to get the map
     markers = "||".join([f"{loc['lat']},{loc['lng']}" for loc in locations])
-    url = f"https://www.mapquestapi.com/staticmap/v5/map?key={API_KEY}&size=1920,1080&zoom=10&locations={markers}"
+    url = f"https://www.mapquestapi.com/staticmap/v5/map?key={API_KEY}&size=1920,1080&zoom=13&locations={markers}"
     response = requests.get(url)
     
     # Save map to Media folder and return HTML page
