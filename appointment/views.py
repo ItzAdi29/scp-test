@@ -104,7 +104,7 @@ class TakeAppointmentView(CreateView):
                 'Date': date_time,
                 'Data': message,
                 'S3': 'scp-in-home-service',
-                'S3_File': 'Input docx.docx',
+                'S3_File': 'create temp.docx',
                 'SNS_ARN': 'arn:aws:sns:us-east-1:907329705668:SCP-IHS-topic'
             }
             
@@ -332,7 +332,7 @@ class UpdateCustomerAppointmentView(UpdateView):
                 'Data': message,
                 'S3': S3_bucket_name,
                 'key' : S3_obj_key,
-                'S3_File': 'Input docx.docx',
+                'S3_File': 'update temp.docx',
                 'SNS_ARN': 'arn:aws:sns:us-east-1:907329705668:SCP-IHS-topic'
             }
             headers = {
