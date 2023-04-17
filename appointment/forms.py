@@ -93,7 +93,7 @@ class TakeAppointmentForm(forms.ModelForm):
         )
         self.fields['date_time'].widget.attrs.update(
             {
-                'placeholder': 'Ex : 24/11/2022',
+                'placeholder': 'Ex : 24-11-2022',
             }
         )
         self.fields['message'].widget.attrs.update(
